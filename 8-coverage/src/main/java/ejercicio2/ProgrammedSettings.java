@@ -5,11 +5,12 @@ package ejercicio2;
 import java.util.*;
 
 public class ProgrammedSettings
-{
-   private Map<Period, Map<DayType, Integer>> settings = 
-       new HashMap<Period, Map<DayType, Integer>>();
+{   // dayType -> semana o fin de semana
+    // period -> mañana, dia, tarde, noche
+    private Map<Period, Map<DayType, Integer>> settings = new LinkedHashMap<>();
 
-   // Property
+
+    // Property
    public ProgrammedSettings ()
    {
       for (Period p : Period.values())
