@@ -44,4 +44,9 @@ public class TestPatternIndex {
         assertEquals(-1, result);
 
     }
+
+    @Test
+    void testConstructor(){
+        PatternIndex patternIndex = new PatternIndex();
+    }
 }
