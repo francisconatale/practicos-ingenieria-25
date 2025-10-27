@@ -2,6 +2,8 @@ package mocks.ejercicio1;
 
 
 public class LogAnalyzer {
+
+    public LogAnalyzer(){}
 	private IWebService service;
 
 	private IEmailService email;
