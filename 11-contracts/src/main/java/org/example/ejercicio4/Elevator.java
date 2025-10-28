@@ -5,7 +5,7 @@ package org.example.ejercicio4;
     /**
      * - currentFloor >= 1 && currentFloor <= maxFloor
      */
-    public class Elevator {
+    public class Elevator implements IElevator {
         private int currentFloor;
         private int maxFloor;
         private ElevatorState state;
