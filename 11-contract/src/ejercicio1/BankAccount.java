@@ -16,16 +16,18 @@ public class BankAccount implements IBankAccount {
     // postcondicion : cuenta con un balance valido
     @Override
     public void deposit(double amount) {
-        assert(amount >= 0 && isOpen);
+        if(amount < 0) { throw new IllegalArgumentException("no se puede depositar un monto negativo"); }
+        if(!isOpen) { throw new IllegalArgumentException("no se puede depositar en una cuenta no habilitada"); }
         balance += amount;
         assert(balance >= 0);
     }
     // precondicion: amount > 0 && amount < balance && isOpen
     // postcondicion : cuenta con un balance valido
     @Override
-
     public void withdraw(double amount) {
-        assert(amount >= 0 && amount <= balance && isOpen);
+        if(amount < 0) { throw new IllegalArgumentException("no se puede retirar un monto negativo"); }
+        if(amount > balance) { throw new IllegalArgumentException("no podes retirar mas dinero que el que tenes");}
+        if(!isOpen) { throw new IllegalArgumentException("no se puede retirar en una cuenta no habilitada"); }
         balance -= amount;
         assert(balance >= 0);
     }
