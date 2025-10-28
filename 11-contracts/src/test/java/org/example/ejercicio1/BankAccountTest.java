@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BankAccountTest {
     @Test
-    public void testDeposit(){
-
-
-    }
+    public void testDeposit(){}
     @Test
     void testWithdrawWithClosedAccount(){
         BankAccount bankAccount = new BankAccount("123", 500.0);
