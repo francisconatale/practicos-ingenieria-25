@@ -1,5 +1,4 @@
-package ejercicio3;
-
+package org.example.ejercicio3;
 /**
  * INVARIANTE:
  */

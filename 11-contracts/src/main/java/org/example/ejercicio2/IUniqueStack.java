@@ -1,4 +1,4 @@
-package ejercicio2;
+package org.example.ejercicio2;
 
 public interface IUniqueStack<E> {
     void push(E item);

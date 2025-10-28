@@ -1,7 +1,6 @@
-package ejercicio3;
+package org.example.ejercicio3;
 
 import java.util.*;
-import static org.junit.jupiter.api.Assertions.*;
 /**
  * INVARIANTE:
  */
@@ -11,6 +10,7 @@ public class Library implements ILibrary {
 
     public Library() {
         books = new HashMap<>();
+        booksAvailable = new HashMap<>();
     }
     @Override
     public void addBook(String isbn, Book book) {
@@ -44,9 +44,19 @@ public class Library implements ILibrary {
         return booksAvailable.get(isbn);
     }
 
-    public boolean repOK(){
+    public boolean repOK() {
         Set<String> isbnForBooksAvailable = booksAvailable.keySet();
         Set<String> isbnForBooks = books.keySet();
-        return isbnForBooksAvailable.equals(isbnForBooks);
+        for (String isbn : books.keySet()) {
+            Book book = books.get(isbn);
+            if(!isbnOfTheBookRegistryCorrespondsToABook(book))
+                return false;
+        }
+        return isbnForBooks.equals(isbnForBooksAvailable);
+    }
+
+    private boolean isbnOfTheBookRegistryCorrespondsToABook(Book book){
+        String isbn = book.getISBN();
+        return books.containsKey(isbn);
     }
 }

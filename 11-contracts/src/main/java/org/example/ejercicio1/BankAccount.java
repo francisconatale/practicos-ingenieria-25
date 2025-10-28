@@ -1,4 +1,4 @@
-package ejercicio1;
+package org.example.ejercicio1;
 // invariante: balance >= 0
 public class BankAccount implements IBankAccount {
     private double balance;
@@ -10,7 +10,7 @@ public class BankAccount implements IBankAccount {
     public BankAccount(String accountNumber, double initialDeposit) {
         this.accountNumber = accountNumber;
         this.balance = initialDeposit;
-        this.isOpen = false;
+        this.isOpen = true;
     }
     // precondicion: amount > 0 && isOpen
     // postcondicion : cuenta con un balance valido
@@ -41,7 +41,11 @@ public class BankAccount implements IBankAccount {
     // postcondicion : cuenta cerrada
     @Override
     public void close() {
-        isOpen = true;
+        isOpen = false;
+    }
+    @Override
+    public boolean isOpen() {
+        return isOpen;
     }
 
     public boolean repOK(){

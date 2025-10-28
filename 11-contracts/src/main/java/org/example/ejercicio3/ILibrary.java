@@ -1,4 +1,4 @@
-package ejercicio3;
+package org.example.ejercicio3;
 /**
  * INVARIANTE:
  * Toda implementación debe garantizar la integridad del conjunto de libros.
