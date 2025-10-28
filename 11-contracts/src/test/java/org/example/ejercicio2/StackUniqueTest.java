@@ -8,8 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.EmptyStackException;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StackUniqueTest {
 
@@ -68,18 +67,48 @@ public class StackUniqueTest {
     <E> void testPushWithItemsExisting(IUniqueStack<E> stack, E item) {
         assertThrows(IllegalArgumentException.class, () -> stack.push(item));
     }
+
     @ParameterizedTest
     @MethodSource("providerOfStacksTwo")
     <E> void testPushWithNullObjects(IUniqueStack<E> stack) {
         assertThrows(NullPointerException.class, () -> stack.push(null));
     }
 
-    @Test
-    public void testPeek(){}
 
-    @Test
-    public void isEmpty(){}
+    @ParameterizedTest
+    @MethodSource("providerOfStacksTwo")
+    <E> void testPeekWithInvalidStacks(IUniqueStack<E> stack) {
+        assertThrows(EmptyStackException.class, () -> stack.peek());
+    }
 
-    @Test
-    public void size(){}
+    @ParameterizedTest
+    @MethodSource("providerOfStacksOne")
+    <E> void testPeekWithValidStacks(IUniqueStack<E> stack) {
+        E item =  stack.peek();
+        assertEquals(item, stack.peek());
+    }
+
+    @ParameterizedTest
+    @MethodSource("providerOfStacksOne")
+    <E> void testEmptyStack(IUniqueStack<E> stack) {
+        assertFalse(stack.isEmpty());
+    }
+    @ParameterizedTest
+    @MethodSource("providerOfStacksTwo")
+    <E> void testNotEmptyStack(IUniqueStack<E> stack) {
+        assertTrue(stack.isEmpty());
+    }
+    @ParameterizedTest
+    @MethodSource("providerOfStacksTwo")
+    <E> void sizeOfStacksEmpty(IUniqueStack<E> stack) {
+        int sizeOfStack =  stack.size();
+        assertEquals(0, sizeOfStack);
+    }
+
+    @ParameterizedTest
+    @MethodSource("providerOfStacksOne")
+    <E> void sizeOfStacksNotEmpty(IUniqueStack<E> stack) {
+        int sizeOfStack =  stack.size();
+        assertEquals(1, sizeOfStack);
+    }
 }
