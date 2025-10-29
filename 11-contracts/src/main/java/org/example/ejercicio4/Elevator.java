@@ -20,36 +20,43 @@ package org.example.ejercicio4;
         public void callToFloor(int floor) {
             assert (floor >= 1 && floor <= maxFloor) : "Invalid call to floor";
             assert (!isOutOfService()) : "The elevator is out of service";
-            if (floor > currentFloor) movingUp(floor);
-            if(floor < currentFloor) movingDown(floor);
+            new Thread(() -> {
+                if (floor > currentFloor) movingUp(floor);
+                else if (floor < currentFloor) movingDown(floor);
+            }).start();
             assert repOK();
         }
 
         private void movingUp(int expectedFloor) {
             try {
                 state = ElevatorState.MOVING_UP;
-                while (currentFloor <= expectedFloor) {
+                while (currentFloor < expectedFloor && !isOutOfService()) {
+                    Thread.sleep(500);
                     currentFloor++;
+                    System.out.println("The elevator is located in: " + currentFloor);
                 }
-                state = ElevatorState.IDLE;
-            } catch (IllegalStateException e) { // never exception in code, is only a simulation of real scenario
-                state = ElevatorState.OUT_OF_SERVICE;
+                if(!isOutOfService()) { state = ElevatorState.IDLE;}
+            } catch (IllegalStateException | InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
 
         private void movingDown(int expectedFloor) {
             try {
                 state = ElevatorState.MOVING_DOWN;
-                while (currentFloor >= expectedFloor) {
+                while (currentFloor > expectedFloor && !isOutOfService()) {
+                    Thread.sleep(500);
                     currentFloor--;
+                    System.out.println("The elevator is located in: " + currentFloor);
                 }
-                state = ElevatorState.IDLE;
-            } catch (IllegalStateException e) { // never exception in code, is only a simulation of real scenario
-                state = ElevatorState.OUT_OF_SERVICE;
+                if(!isOutOfService()) { state = ElevatorState.IDLE;}
+
+            } catch (IllegalStateException | InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
 
-        private boolean isOutOfService() {
+        public boolean isOutOfService() {
             return state == ElevatorState.OUT_OF_SERVICE;
         }
 
@@ -59,8 +66,15 @@ package org.example.ejercicio4;
 
         public void stop(){
             assert (!isOutOfService()) : "The elevator is out of service";
-            assert (elevatorIsMoving()) : "The elevator is moving";
-            state = ElevatorState.IDLE;
+            if(elevatorIsMoving()) {
+                state = ElevatorState.OUT_OF_SERVICE;
+            } else {
+                state = ElevatorState.IDLE;
+            }
+        }
+
+        public int getCurrentFloor() {
+            return currentFloor;
         }
 
         public boolean repOK(){
